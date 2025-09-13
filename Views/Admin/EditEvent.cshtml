@@ -1,0 +1,187 @@
+@model EventSphere.Models.Event
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-edit me-2"></i>Edit Event
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditEvent" method="post" enctype="multipart/form-data">
+                        <input asp-for="Id" type="hidden" />
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="row g-3">
+                            <!-- Event Title -->
+                            <div class="col-12">
+                                <label asp-for="Title" class="form-label fw-bold">Event Title *</label>
+                                <input asp-for="Title" class="form-control" placeholder="Enter event title" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label asp-for="Description" class="form-label fw-bold">Description *</label>
+                                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter event description"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <!-- Category and Event Type -->
+                            <div class="col-md-6">
+                                <label asp-for="Category" class="form-label fw-bold">Category *</label>
+                                <select asp-for="Category" class="form-select" asp-items="@(new SelectList(ViewBag.Categories))">
+                                    <option value="">Select Category</option>
+                                </select>
+                                <span asp-validation-for="Category" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="EventType" class="form-label fw-bold">Event Type *</label>
+                                <input asp-for="EventType" class="form-control" placeholder="e.g., Seminar, Competition, Workshop" />
+                                <span asp-validation-for="EventType" class="text-danger"></span>
+                            </div>
+
+                            <!-- Venue and Department -->
+                            <div class="col-md-6">
+                                <label asp-for="Venue" class="form-label fw-bold">Venue *</label>
+                                <input asp-for="Venue" class="form-control" placeholder="Enter venue location" />
+                                <span asp-validation-for="Venue" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="OrganizingDepartment" class="form-label fw-bold">Organizing Department *</label>
+                                <input asp-for="OrganizingDepartment" class="form-control" placeholder="Enter department name" />
+                                <span asp-validation-for="OrganizingDepartment" class="text-danger"></span>
+                            </div>
+
+                            <!-- Event Date and Time -->
+                            <div class="col-md-4">
+                                <label asp-for="EventDate" class="form-label fw-bold">Event Date *</label>
+                                <input asp-for="EventDate" type="date" class="form-control" />
+                                <span asp-validation-for="EventDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="StartTime" class="form-label fw-bold">Start Time *</label>
+                                <input asp-for="StartTime" type="time" class="form-control" />
+                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="EndTime" class="form-label fw-bold">End Time *</label>
+                                <input asp-for="EndTime" type="time" class="form-control" />
+                                <span asp-validation-for="EndTime" class="text-danger"></span>
+                            </div>
+
+                            <!-- Capacity and Status -->
+                            <div class="col-md-6">
+                                <label asp-for="MaxCapacity" class="form-label fw-bold">Maximum Capacity *</label>
+                                <input asp-for="MaxCapacity" type="number" class="form-control" min="1" placeholder="Enter maximum number of participants" />
+                                <span asp-validation-for="MaxCapacity" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Status" class="form-label fw-bold">Status *</label>
+                                <select asp-for="Status" class="form-select" asp-items="@(new SelectList(ViewBag.Statuses))">
+                                    <option value="">Select Status</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+
+                            <!-- Current Registrations -->
+                            <div class="col-md-6">
+                                <label asp-for="CurrentRegistrations" class="form-label fw-bold">Current Registrations</label>
+                                <input asp-for="CurrentRegistrations" type="number" class="form-control" min="0" readonly />
+                                <div class="form-text">This field is automatically managed</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Registration Progress</label>
+                                <div class="progress" style="height: 25px;">
+                                    @{
+                                        var percentage = Model.MaxCapacity > 0 ? (double)Model.CurrentRegistrations / Model.MaxCapacity * 100 : 0;
+                                    }
+                                    <div class="progress-bar @(percentage >= 100 ? "bg-danger" : percentage >= 80 ? "bg-warning" : "bg-success")" 
+                                         style="width: @(Math.Min(percentage, 100))%">
+                                        @Model.CurrentRegistrations/@Model.MaxCapacity (@Math.Round(percentage, 1)%)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Banner Image -->
+                            <div class="col-12">
+                                <label asp-for="BannerImageUrl" class="form-label fw-bold">Banner Image URL</label>
+                                <input asp-for="BannerImageUrl" class="form-control" placeholder="Enter image URL" />
+                                <span asp-validation-for="BannerImageUrl" class="text-danger"></span>
+                                @if (!string.IsNullOrEmpty(Model.BannerImageUrl))
+                                {
+                                    <div class="mt-2">
+                                        <img src="@Model.BannerImageUrl" class="img-thumbnail" style="max-width: 200px; max-height: 150px;" alt="Current banner" />
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Rulebook URL -->
+                            <div class="col-12">
+                                <label asp-for="RulebookUrl" class="form-label fw-bold">Rulebook URL</label>
+                                <input asp-for="RulebookUrl" class="form-control" placeholder="Enter rulebook URL" />
+                                <span asp-validation-for="RulebookUrl" class="text-danger"></span>
+                            </div>
+
+                            <!-- Certificate Fee -->
+                            <div class="col-12">
+                                <label asp-for="CertificateFee" class="form-label fw-bold">Certificate Fee</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input asp-for="CertificateFee" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="CertificateFee" class="text-danger"></span>
+                            </div>
+
+                            <!-- Created/Updated Info -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Created At</label>
+                                <input type="text" class="form-control" value="@Model.CreatedAt.ToString("MMM dd, yyyy HH:mm")" readonly />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Last Updated</label>
+                                <input type="text" class="form-control" value="@Model.UpdatedAt.ToString("MMM dd, yyyy HH:mm")" readonly />
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <a asp-action="Events" class="btn btn-secondary btn-lg">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to Events
+                                    </a>
+                                    <div>
+                                        <a asp-action="EventDetails" asp-route-id="@Model.Id" class="btn btn-info btn-lg me-2">
+                                            <i class="fas fa-eye me-2"></i>View Details
+                                        </a>
+                                        <button type="submit" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-save me-2"></i>Update Event
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

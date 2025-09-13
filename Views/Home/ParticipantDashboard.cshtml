@@ -1,0 +1,207 @@
+@{
+    ViewData["Title"] = "Participant Dashboard";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-6 mb-4">
+                <i class="fas fa-user text-primary me-2"></i>Participant Dashboard
+            </h1>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">My Registrations</h4>
+                            <h2 class="mb-0">0</h2>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-user-check fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">Upcoming Events</h4>
+                            <h2 class="mb-0">@(ViewData["UpcomingEvents"] is IEnumerable<EventSphere.Models.Event> upcomingEventsCount ? upcomingEventsCount.Count() : 0)</h2>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-calendar fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">Completed Events</h4>
+                            <h2 class="mb-0">0</h2>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">Certificates</h4>
+                            <h2 class="mb-0">0</h2>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-certificate fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Events Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-calendar-alt text-primary me-2"></i>Upcoming Events
+                    </h5>
+                    <a asp-controller="Events" asp-action="Index" class="btn btn-outline-primary">
+                        <i class="fas fa-search me-2"></i>Browse All Events
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (ViewData["UpcomingEvents"] is IEnumerable<EventSphere.Models.Event> upcomingEventsList && upcomingEventsList.Any())
+                    {
+                        <div class="row">
+                            @foreach (var eventItem in upcomingEventsList)
+                            {
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        @if (!string.IsNullOrEmpty(eventItem.BannerImageUrl))
+                                        {
+                                            <img src="@eventItem.BannerImageUrl" class="card-img-top" alt="@eventItem.Title" style="height: 150px; object-fit: cover;">
+                                        }
+                                        else
+                                        {
+                                            <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 150px;">
+                                                <i class="fas fa-calendar-alt text-white" style="font-size: 2rem;"></i>
+                                            </div>
+                                        }
+                                        <div class="card-body d-flex flex-column">
+                                            <h6 class="card-title">@eventItem.Title</h6>
+                                            <p class="card-text text-muted small flex-grow-1">
+                                                <i class="fas fa-calendar me-1"></i>@eventItem.EventDate.ToString("MMM dd, yyyy")
+                                                <br>
+                                                <i class="fas fa-clock me-1"></i>@eventItem.StartTime.ToString(@"hh\:mm")
+                                                <br>
+                                                <i class="fas fa-map-marker-alt me-1"></i>@eventItem.Venue
+                                            </p>
+                                            <div class="mt-auto">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="badge bg-primary">@eventItem.Category</span>
+                                                    <a asp-controller="Events" asp-action="Details" asp-route-id="@eventItem.Id" 
+                                                       class="btn btn-outline-primary btn-sm">
+                                                        <i class="fas fa-eye me-1"></i>View
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-times text-muted fa-3x mb-3"></i>
+                            <h5 class="text-muted">No upcoming events</h5>
+                            <p class="text-muted">Check back later for exciting events!</p>
+                            <a asp-controller="Events" asp-action="Index" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>Browse Events
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Registrations Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-user-check text-success me-2"></i>My Event Registrations
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center py-4">
+                        <i class="fas fa-user-plus text-muted fa-3x mb-3"></i>
+                        <h5 class="text-muted">No registrations yet</h5>
+                        <p class="text-muted">Register for events to see them here!</p>
+                        <a asp-controller="Events" asp-action="Index" class="btn btn-primary">
+                            <i class="fas fa-calendar me-2"></i>Browse Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-bolt text-primary me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Events" asp-action="Index" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-search me-2"></i>Browse Events
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="#" class="btn btn-outline-success w-100">
+                                <i class="fas fa-user-check me-2"></i>My Registrations
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="#" class="btn btn-outline-info w-100">
+                                <i class="fas fa-certificate me-2"></i>My Certificates
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="#" class="btn btn-outline-warning w-100">
+                                <i class="fas fa-star me-2"></i>My Reviews
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

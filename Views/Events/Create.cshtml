@@ -1,0 +1,166 @@
+@model EventSphere.Models.Event
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-plus me-2"></i>Create New Event
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="row g-3">
+                            <!-- Event Title -->
+                            <div class="col-12">
+                                <label asp-for="Title" class="form-label fw-bold">Event Title *</label>
+                                <input asp-for="Title" class="form-control" placeholder="Enter event title" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label asp-for="Description" class="form-label fw-bold">Description *</label>
+                                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter event description"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <!-- Category and Event Type -->
+                            <div class="col-md-6">
+                                <label asp-for="Category" class="form-label fw-bold">Category *</label>
+                                <select asp-for="Category" class="form-select">
+                                    <option value="">Select Category</option>
+                                    <option value="Cultural">Cultural</option>
+                                    <option value="Academic">Academic</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Social">Social</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Career">Career</option>
+                                </select>
+                                <span asp-validation-for="Category" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="EventType" class="form-label fw-bold">Event Type *</label>
+                                <input asp-for="EventType" class="form-control" placeholder="e.g., Seminar, Competition, Workshop" />
+                                <span asp-validation-for="EventType" class="text-danger"></span>
+                            </div>
+
+                            <!-- Venue and Department -->
+                            <div class="col-md-6">
+                                <label asp-for="Venue" class="form-label fw-bold">Venue *</label>
+                                <input asp-for="Venue" class="form-control" placeholder="Enter venue location" />
+                                <span asp-validation-for="Venue" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="OrganizingDepartment" class="form-label fw-bold">Organizing Department *</label>
+                                <input asp-for="OrganizingDepartment" class="form-control" placeholder="Enter department name" />
+                                <span asp-validation-for="OrganizingDepartment" class="text-danger"></span>
+                            </div>
+
+                            <!-- Event Date and Time -->
+                            <div class="col-md-4">
+                                <label asp-for="EventDate" class="form-label fw-bold">Event Date *</label>
+                                <input asp-for="EventDate" type="date" class="form-control" />
+                                <span asp-validation-for="EventDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="StartTime" class="form-label fw-bold">Start Time *</label>
+                                <input asp-for="StartTime" type="time" class="form-control" />
+                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="EndTime" class="form-label fw-bold">End Time *</label>
+                                <input asp-for="EndTime" type="time" class="form-control" />
+                                <span asp-validation-for="EndTime" class="text-danger"></span>
+                            </div>
+
+                            <!-- Capacity and Organizer Info -->
+                            <div class="col-md-6">
+                                <label asp-for="MaxCapacity" class="form-label fw-bold">Maximum Capacity *</label>
+                                <input asp-for="MaxCapacity" type="number" class="form-control" min="1" placeholder="Enter maximum number of participants" />
+                                <span asp-validation-for="MaxCapacity" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="OrganizerName" class="form-label fw-bold">Organizer Name *</label>
+                                <input asp-for="OrganizerName" class="form-control" placeholder="Enter organizer name" />
+                                <span asp-validation-for="OrganizerName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="OrganizerEmail" class="form-label fw-bold">Organizer Email *</label>
+                                <input asp-for="OrganizerEmail" type="email" class="form-control" placeholder="Enter organizer email" />
+                                <span asp-validation-for="OrganizerEmail" class="text-danger"></span>
+                            </div>
+
+                            <!-- Banner Image -->
+                            <div class="col-12">
+                                <label asp-for="BannerImageUrl" class="form-label fw-bold">Banner Image URL</label>
+                                <input asp-for="BannerImageUrl" class="form-control" placeholder="Enter image URL" />
+                                <span asp-validation-for="BannerImageUrl" class="text-danger"></span>
+                                <div class="form-text">Optional: Provide a URL for the event banner image</div>
+                            </div>
+
+                            <!-- Rulebook URL -->
+                            <div class="col-12">
+                                <label asp-for="RulebookUrl" class="form-label fw-bold">Rulebook URL</label>
+                                <input asp-for="RulebookUrl" class="form-control" placeholder="Enter rulebook URL" />
+                                <span asp-validation-for="RulebookUrl" class="text-danger"></span>
+                                <div class="form-text">Optional: Provide a URL for event rules or guidelines</div>
+                            </div>
+
+                            <!-- Certificate Fee -->
+                            <div class="col-12">
+                                <label asp-for="CertificateFee" class="form-label fw-bold">Certificate Fee</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input asp-for="CertificateFee" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="CertificateFee" class="text-danger"></span>
+                                <div class="form-text">Enter 0 for free certificates</div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <a asp-action="Index" class="btn btn-secondary btn-lg">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to Events
+                                    </a>
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-save me-2"></i>Create Event
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventDateInput = document.querySelector('input[name="EventDate"]');
+            const today = new Date().toISOString().split('T')[0];
+            eventDateInput.setAttribute('min', today);
+        });
+    </script>
+}

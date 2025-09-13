@@ -1,0 +1,249 @@
+@model EventSphere.Models.Event
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- Header Section -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="display-6 fw-bold text-primary">
+                    <i class="fas fa-calendar-alt me-3"></i>Event Details
+                </h2>
+                <div class="btn-group">
+                    <a asp-action="EditEvent" asp-route-id="@Model.Id" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Edit Event
+                    </a>
+                    <a asp-action="Events" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Events
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Main Event Information -->
+                <div class="col-lg-8">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">@Model.Title</h4>
+                        </div>
+                        <div class="card-body">
+                            <!-- Event Banner -->
+                            @if (!string.IsNullOrEmpty(Model.BannerImageUrl))
+                            {
+                                <div class="text-center mb-4">
+                                    <img src="@Model.BannerImageUrl" class="img-fluid rounded" style="max-height: 300px; width: 100%; object-fit: cover;" alt="Event Banner" />
+                                </div>
+                            }
+
+                            <!-- Event Description -->
+                            <div class="mb-4">
+                                <h5 class="fw-bold text-primary">Description</h5>
+                                <p class="text-muted">@Model.Description</p>
+                            </div>
+
+                            <!-- Event Details Grid -->
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-tag text-primary me-3"></i>
+                                        <div>
+                                            <strong>Category:</strong><br>
+                                            <span class="badge bg-primary">@Model.Category</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-list text-success me-3"></i>
+                                        <div>
+                                            <strong>Event Type:</strong><br>
+                                            <span class="text-muted">@Model.EventType</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-calendar text-info me-3"></i>
+                                        <div>
+                                            <strong>Event Date:</strong><br>
+                                            <span class="text-muted">@Model.EventDate.ToString("dddd, MMMM dd, yyyy")</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-clock text-warning me-3"></i>
+                                        <div>
+                                            <strong>Time:</strong><br>
+                                            <span class="text-muted">@Model.StartTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-map-marker-alt text-danger me-3"></i>
+                                        <div>
+                                            <strong>Venue:</strong><br>
+                                            <span class="text-muted">@Model.Venue</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-building text-secondary me-3"></i>
+                                        <div>
+                                            <strong>Department:</strong><br>
+                                            <span class="text-muted">@Model.OrganizingDepartment</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Information -->
+                            @if (!string.IsNullOrEmpty(Model.RulebookUrl))
+                            {
+                                <div class="mt-4">
+                                    <h5 class="fw-bold text-primary">Rulebook</h5>
+                                    <a href="@Model.RulebookUrl" target="_blank" class="btn btn-outline-primary">
+                                        <i class="fas fa-download me-2"></i>Download Rulebook
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Information -->
+                <div class="col-lg-4">
+                    <!-- Status and Actions -->
+                    <div class="card shadow-lg mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">Event Status & Actions</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                @switch (Model.Status)
+                                {
+                                    case EventSphere.Models.EventStatus.Pending:
+                                        <span class="badge bg-warning fs-6">Pending Approval</span>
+                                        break;
+                                    case EventSphere.Models.EventStatus.Approved:
+                                        <span class="badge bg-success fs-6">Approved</span>
+                                        break;
+                                    case EventSphere.Models.EventStatus.Rejected:
+                                        <span class="badge bg-danger fs-6">Rejected</span>
+                                        break;
+                                    case EventSphere.Models.EventStatus.Cancelled:
+                                        <span class="badge bg-secondary fs-6">Cancelled</span>
+                                        break;
+                                    case EventSphere.Models.EventStatus.Completed:
+                                        <span class="badge bg-info fs-6">Completed</span>
+                                        break;
+                                }
+                            </div>
+
+                            @if (Model.Status == EventSphere.Models.EventStatus.Pending)
+                            {
+                                <div class="d-grid gap-2">
+                                    <form asp-action="ApproveEvent" asp-route-id="@Model.Id" method="post">
+                                        <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to approve this event?')">
+                                            <i class="fas fa-check me-2"></i>Approve Event
+                                        </button>
+                                    </form>
+                                    <form asp-action="RejectEvent" asp-route-id="@Model.Id" method="post">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to reject this event?')">
+                                            <i class="fas fa-times me-2"></i>Reject Event
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Registration Statistics -->
+                    <div class="card shadow-lg mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">Registration Statistics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Current Registrations:</span>
+                                    <strong>@Model.CurrentRegistrations</strong>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Maximum Capacity:</span>
+                                    <strong>@Model.MaxCapacity</strong>
+                                </div>
+                            </div>
+
+                            @{
+                                var percentage = Model.MaxCapacity > 0 ? (double)Model.CurrentRegistrations / Model.MaxCapacity * 100 : 0;
+                            }
+                            <div class="progress mb-3" style="height: 25px;">
+                                <div class="progress-bar @(percentage >= 100 ? "bg-danger" : percentage >= 80 ? "bg-warning" : "bg-success")" 
+                                     style="width: @(Math.Min(percentage, 100))%">
+                                    @Math.Round(percentage, 1)%
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <small class="text-muted">
+                                    @if (percentage >= 100)
+                                    {
+                                        <span class="text-danger">Event is Full</span>
+                                    }
+                                    else if (percentage >= 80)
+                                    {
+                                        <span class="text-warning">Almost Full</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-success">Available Spots</span>
+                                    }
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Information -->
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0">Event Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <strong>Organizer:</strong><br>
+                                <span class="text-muted">@Model.OrganizerName</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Email:</strong><br>
+                                <a href="mailto:@Model.OrganizerEmail" class="text-decoration-none">@Model.OrganizerEmail</a>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Certificate Fee:</strong><br>
+                                <span class="text-muted">$@Model.CertificateFee.ToString("F2")</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Created:</strong><br>
+                                <span class="text-muted">@Model.CreatedAt.ToString("MMM dd, yyyy")</span>
+                            </div>
+                            <div>
+                                <strong>Last Updated:</strong><br>
+                                <span class="text-muted">@Model.UpdatedAt.ToString("MMM dd, yyyy")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

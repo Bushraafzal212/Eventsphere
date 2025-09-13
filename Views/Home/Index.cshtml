@@ -1,0 +1,526 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Hero Section with Enhanced Design -->
+<div class="hero-section text-white py-5 mb-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; overflow: hidden; min-height: 80vh;">
+    <!-- Animated background elements -->
+    <div class="hero-bg-elements">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+    
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="display-3 fw-bold mb-4 text-shadow animate-fade-in">
+                        Welcome to <span class="gradient-text-white">EventSphere</span>
+                    </h1>
+                    <p class="lead mb-4 text-shadow animate-slide-up" style="font-size: 1.25rem; line-height: 1.6;">
+                        Your comprehensive college event management platform. Discover, register, and participate in exciting events happening around campus.
+                    </p>
+                    <div class="hero-buttons d-flex gap-3 flex-wrap animate-slide-up">
+                        <a asp-controller="Events" asp-action="Index" class="btn btn-light btn-lg shadow-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-calendar me-2"></i>Browse Events
+                        </a>
+                        @if (User.Identity?.IsAuthenticated != true)
+                        {
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-light btn-lg shadow-lg px-4 py-3 rounded-pill">
+                                <i class="fas fa-user-plus me-2"></i>Get Started
+                            </a>
+                        }
+                        <a href="#announcements" class="btn btn-warning btn-lg shadow-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-bullhorn me-2"></i>Latest News
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-visual animate-fade-in">
+                    <div class="hero-icon-container">
+                        <i class="fas fa-calendar-alt hero-main-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Enhanced decorative waves -->
+    <div class="wave-container">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" style="position: absolute; bottom: 0; width: 100%; height: 80px;">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#fff"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#fff"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#fff"></path>
+        </svg>
+    </div>
+</div>
+
+<!-- Enhanced Announcements Section -->
+<div id="announcements" class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="announcements-container">
+                <div class="row align-items-center">
+                    <div class="col-12 text-center mb-4">
+                        <h2 class="display-6 fw-bold text-primary mb-3">
+                            <i class="fas fa-bullhorn me-3"></i>Latest Announcements
+                        </h2>
+                        <p class="lead text-muted">Stay updated with the latest news and important updates</p>
+                    </div>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="announcement-card announcement-primary">
+                            <div class="announcement-icon">
+                                <i class="fas fa-calendar-plus"></i>
+                            </div>
+                            <div class="announcement-content">
+                                <h5 class="announcement-title">Spring Festival 2024 Registration Open</h5>
+                                <p class="announcement-text">Join us for the biggest cultural event of the year. Registration closes on March 15th.</p>
+                                <div class="announcement-meta">
+                                    <span class="badge bg-primary">New</span>
+                                    <small class="text-muted">2 days ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6">
+                        <div class="announcement-card announcement-success">
+                            <div class="announcement-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="announcement-content">
+                                <h5 class="announcement-title">Tech Competition Winners Announced</h5>
+                                <p class="announcement-text">Congratulations to all participants! Check out the results in our events section.</p>
+                                <div class="announcement-meta">
+                                    <span class="badge bg-success">Results</span>
+                                    <small class="text-muted">1 week ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6">
+                        <div class="announcement-card announcement-info">
+                            <div class="announcement-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="announcement-content">
+                                <h5 class="announcement-title">New Workshop Series Starting</h5>
+                                <p class="announcement-text">Learn new skills with our comprehensive workshop series. Free for all students!</p>
+                                <div class="announcement-meta">
+                                    <span class="badge bg-info">Workshop</span>
+                                    <small class="text-muted">3 days ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="#" class="btn btn-outline-primary btn-lg px-4 py-2 rounded-pill">
+                        <i class="fas fa-list me-2"></i>View All Announcements
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Statistics Section -->
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary mb-3">
+                <i class="fas fa-chart-line me-3"></i>Platform Statistics
+            </h2>
+            <p class="lead text-muted">Numbers that showcase our growing community</p>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card stat-primary">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number" data-target="@ViewData["TotalEvents"]">0</h3>
+                    <p class="stat-label">Upcoming Events</p>
+                    <div class="stat-progress">
+                        <div class="progress-bar" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card stat-success">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number" data-target="500">0</h3>
+                    <p class="stat-label">Active Participants</p>
+                    <div class="stat-progress">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card stat-info">
+                <div class="stat-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number" data-target="15">0</h3>
+                    <p class="stat-label">Departments</p>
+                    <div class="stat-progress">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card stat-warning">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number" data-target="100">0</h3>
+                    <p class="stat-label">Events Completed</p>
+                    <div class="stat-progress">
+                        <div class="progress-bar" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Featured Events Section -->
+<div class="container mb-5">
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="display-6 fw-bold mb-3 text-primary">
+                <i class="fas fa-star text-warning me-3"></i>Featured Events
+            </h2>
+            <p class="lead text-muted">Discover the most exciting events happening on campus</p>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        @if (ViewData["FeaturedEvents"] is IEnumerable<EventSphere.Models.Event> featuredEvents && featuredEvents.Any())
+        {
+            @foreach (var eventItem in featuredEvents)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="event-card">
+                        <div class="event-image-container">
+                            @{
+                                var imageService = ViewData["ImageService"] as EventSphere.Services.IImageService;
+                                var imageUrl = imageService?.GetEventImageUrl(eventItem) ?? "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=400&fit=crop";
+                            }
+                            <img src="@imageUrl" class="event-image" alt="@eventItem.Title">
+                            <div class="event-category-badge">
+                                <span class="badge">@eventItem.Category</span>
+                            </div>
+                        </div>
+                        
+                        <div class="event-content">
+                            <h5 class="event-title">@eventItem.Title</h5>
+                            <p class="event-description">@(eventItem.Description.Length > 120 ? eventItem.Description.Substring(0, 120) + "..." : eventItem.Description)</p>
+                            
+                            <div class="event-details">
+                                <div class="event-detail-item">
+                                    <i class="fas fa-calendar text-primary"></i>
+                                    <span>@eventItem.EventDate.ToString("MMM dd, yyyy")</span>
+                                </div>
+                                <div class="event-detail-item">
+                                    <i class="fas fa-clock text-success"></i>
+                                    <span>@eventItem.StartTime.ToString(@"hh\:mm")</span>
+                                </div>
+                                <div class="event-detail-item">
+                                    <i class="fas fa-map-marker-alt text-danger"></i>
+                                    <span>@eventItem.Venue</span>
+                                </div>
+                            </div>
+                            
+                            <div class="event-actions">
+                                <a asp-controller="Events" asp-action="Details" asp-route-id="@eventItem.Id" 
+                                   class="btn btn-primary btn-sm">
+                                    <i class="fas fa-eye me-1"></i>View Details
+                                </a>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="no-events-container">
+                    <div class="no-events-content">
+                        <i class="fas fa-calendar-times no-events-icon"></i>
+                        <h4 class="no-events-title">No events available at the moment</h4>
+                        <p class="no-events-text">Check back later for exciting events!</p>
+                        <a asp-controller="Events" asp-action="Index" class="btn btn-primary btn-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-search me-2"></i>Browse All Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <div class="text-center mt-5">
+        <a asp-controller="Events" asp-action="Index" class="btn btn-gradient btn-lg px-5 py-3 rounded-pill">
+            <i class="fas fa-calendar me-2"></i>View All Events
+        </a>
+    </div>
+</div>
+
+<!-- Enhanced Features Section -->
+<div class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-6 fw-bold text-primary mb-3">Why Choose EventSphere?</h2>
+                <p class="lead text-muted">Experience the future of college event management with cutting-edge features</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card feature-primary">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h5 class="feature-title">Mobile Friendly</h5>
+                    <p class="feature-description">Access events on any device, anywhere, anytime with our responsive design.</p>
+                    <div class="feature-highlight">
+                        <span class="badge bg-primary">Responsive</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card feature-success">
+                    <div class="feature-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h5 class="feature-title">QR Code Check-in</h5>
+                    <p class="feature-description">Quick and easy attendance tracking with advanced QR code technology.</p>
+                    <div class="feature-highlight">
+                        <span class="badge bg-success">Fast</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card feature-info">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h5 class="feature-title">Real-time Notifications</h5>
+                    <p class="feature-description">Stay updated with instant notifications and smart reminders.</p>
+                    <div class="feature-highlight">
+                        <span class="badge bg-info">Instant</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card feature-warning">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h5 class="feature-title">Digital Certificates</h5>
+                    <p class="feature-description">Receive beautiful digital certificates for your participation and achievements.</p>
+                    <div class="feature-highlight">
+                        <span class="badge bg-warning">Digital</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card feature-danger">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="feature-title">Event Reviews</h5>
+                    <p class="feature-description">Share your experience and help others choose the best events.</p>
+                    <div class="feature-highlight">
+                        <span class="badge bg-danger">Community</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card feature-secondary">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h5 class="feature-title">Social Sharing</h5>
+                    <p class="feature-description">Share exciting events with friends on social media platforms.</p>
+                    <div class="feature-highlight">
+                        <span class="badge bg-secondary">Social</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Media Gallery Preview Section -->
+<div class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-6 fw-bold mb-3">
+                    <i class="fas fa-images me-3"></i>Event Gallery
+                </h2>
+                <p class="lead opacity-75">Explore photos and videos from our amazing events</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card gallery-cultural">
+                    <div class="gallery-image">
+                        <i class="fas fa-music"></i>
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <h6 class="gallery-title">Cultural Events</h6>
+                        <p class="gallery-count">Festivals, Talent Shows, Fashion Shows</p>
+                        <div class="gallery-stats">
+                            <span class="gallery-stat">
+                                <i class="fas fa-eye"></i> 2.1k views
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card gallery-academic">
+                    <div class="gallery-image">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <h6 class="gallery-title">Academic Events</h6>
+                        <p class="gallery-count">Seminars, Hackathons, Workshops</p>
+                        <div class="gallery-stats">
+                            <span class="gallery-stat">
+                                <i class="fas fa-heart"></i> 1.8k likes
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card gallery-sports">
+                    <div class="gallery-image">
+                        <i class="fas fa-trophy"></i>
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <h6 class="gallery-title">Sports Events</h6>
+                        <p class="gallery-count">Football, Cricket, Athletics, Esports</p>
+                        <div class="gallery-stats">
+                            <span class="gallery-stat">
+                                <i class="fas fa-share"></i> 950 shares
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card gallery-social">
+                    <div class="gallery-image">
+                        <i class="fas fa-hands-helping"></i>
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <h6 class="gallery-title">Social Events</h6>
+                        <p class="gallery-count">Fundraisers, Blood Drives, Volunteer</p>
+                        <div class="gallery-stats">
+                            <span class="gallery-stat">
+                                <i class="fas fa-comment"></i> 420 comments
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card gallery-entertainment">
+                    <div class="gallery-image">
+                        <i class="fas fa-theater-masks"></i>
+                        <div class="gallery-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <h6 class="gallery-title">Entertainment Events</h6>
+                        <p class="gallery-count">Concerts, Comedy, Movie Nights</p>
+                        <div class="gallery-stats">
+                            <span class="gallery-stat">
+                                <i class="fas fa-heart"></i> 1.5k likes
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card gallery-career">
+                    <div class="gallery-image">
+                        <i class="fas fa-briefcase"></i>
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <h6 class="gallery-title">Career Events</h6>
+                        <p class="gallery-count">Job Fairs, Alumni Talks, Networking</p>
+                        <div class="gallery-stats">
+                            <span class="gallery-stat">
+                                <i class="fas fa-eye"></i> 1.3k views
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="#" class="btn btn-light btn-lg px-5 py-3 rounded-pill" style="font-weight: 600; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);">
+                <i class="fas fa-images me-2"></i>View Full Gallery
+            </a>
+        </div>
+    </div>
+</div>
